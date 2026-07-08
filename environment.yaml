@@ -1,0 +1,17 @@
+name: annotation
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.9
+  - snakemake-minimal
+  - bcftools
+  - perl
+  - pandas
+  - pip
+  - pip:
+      - fuc
+# NOTE: ANNOVAR and ClassifyCNV are NOT available via conda/pip.
+#   ANNOVAR    -> register and download from https://annovar.openbioinformatics.org
+#   ClassifyCNV -> git clone https://github.com/Genotek/ClassifyCNV
+# Place them at the paths configured in config.yaml (annovar/, ClassifyCNV/).
