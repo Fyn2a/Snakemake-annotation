@@ -1,8 +1,10 @@
-# config/config.yaml
-genome_build: "hg19"          
-input_vcf: "/home/faris/projects/annotation/input/TEST-1_CNV1.cnv.vcf" 
-output_dir: "/home/faris/projects/annotation/FinalOUT/"             
-classifycnv_script: "/home/faris/projects/annotation/ClassifyCNV/ClassifyCNV.py" 
-annovar_dir: "/home/faris/projects/annotation/annovar/"  
-merge_script: "/home/faris/projects/annotation/merge.py"
-bed_script: "/home/faris/projects/annotation/vcf2bed.py"
+# config.yaml
+# Paths are relative to the repository root so the workflow is portable.
+# External tools (ANNOVAR, ClassifyCNV) are not bundled here — see README.md.
+genome_build: "hg19"
+input_vcf: "input/TEST-1_CNV1.cnv.vcf"
+output_dir: "FinalOUT"
+classifycnv_script: "ClassifyCNV/ClassifyCNV.py"
+annovar_dir: "annovar"
+merge_script: "merge.py"
+bed_script: "vcf2bed.py"

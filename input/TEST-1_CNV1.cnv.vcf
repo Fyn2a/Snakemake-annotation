@@ -1,0 +1,11 @@
+##fileformat=VCFv4.2
+##reference=hg19
+##ALT=<ID=DEL,Description="Deletion">
+##ALT=<ID=DUP,Description="Duplication">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Length of structural variant">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+1	1000000	.	N	<DEL>	.	PASS	END=1050000;SVTYPE=DEL;SVLEN=-50000
+7	2000000	.	N	<DUP>	.	PASS	END=2100000;SVTYPE=DUP;SVLEN=100000
+17	41200000	.	N	<DEL>	.	PASS	END=41280000;SVTYPE=DEL;SVLEN=-80000

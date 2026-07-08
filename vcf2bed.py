@@ -6,29 +6,33 @@ def end_position(value: str):
     if 'END=' in value:
         try:
             end_value = next(part.split('=')[1] for part in value.split(';') if part.startswith('END='))
-            return int(end_value) - 1
+            return int(end_value)
         except (ValueError, StopIteration):
-            return ''
-    return ''
+            return pd.NA
+    return pd.NA
 
 def extract_info(cnv_file: str, bed_file: str):
-    df = pd.read_csv(cnv_file)
-    
-    chr = df.iloc[:, 0]
-    start = df.iloc[:, 1]
+    # bcftools query emits no header row, so read positionally.
+    df = pd.read_csv(cnv_file, header=None)
+
+    chrom = df.iloc[:, 0]
+    # VCF POS is 1-based; BED start is 0-based half-open.
+    start = df.iloc[:, 1].astype(int) - 1
     alt = df.iloc[:, 2].str.replace(r'^<|>$', '', regex=True)
-    end = df.iloc[:, 3]
-    
-    end_pos = end.apply(end_position)    
-    
+    info = df.iloc[:, 3]
+
+    end_pos = info.apply(end_position)
+
     new_df = pd.DataFrame({
-        'chromosome': chr,
+        'Chromosome': chrom,
         'Start': start,
         'End': end_pos,
         'Type': alt
     })
-    new_df.columns = ['Chromosome', 'Start', 'End', 'Type']
-    
+    # Drop records without a usable END and keep End as an integer column.
+    new_df = new_df.dropna(subset=['End'])
+    new_df['End'] = new_df['End'].astype(int)
+
     bed = pybed.BedFrame.from_frame(data=new_df, meta=[])
     bed.to_file(bed_file)
 
